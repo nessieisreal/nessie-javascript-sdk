@@ -1,0 +1,37 @@
+					console.log("[ATM - Get All] : Sample ATMLocation: " + atmAccount.getAll()[0].name);
+<!-- //
+/*
+ * Author: Vincent K. Sam
+ * Created on: May 1, 2015
+ */
+// -->
+<html>
+	<head>
+		<!-- Required File -->
+		<script data-main="lib/capital_one" src="lib/require-jquery.js"></script>
+		
+		<script>
+			$(function(){
+				require(['account', 'atm', 'branch'], function (account, atm) {
+
+					var entApiKey = '<api_key>';
+
+					console.log('Account Demo');
+					var custAccount = account.initWithKey(entApiKey);
+					console.log("[Account - Get All] : Sample Account Nickname: (" + custAccount.getAll()[0].nickname + ")");
+					console.log("[Account - Get All By Type] : " + custAccount.getAllByType('Credit Card')[0].type);
+					console.log("[Account - Get One] : Account Balance $" + parseFloat(custAccount.getOne('5516c07ba520e0066c9ac93a').balance).toFixed(2));
+				
+					console.log('ATM Demo');
+					var atmAccount = atm.initWithKey(entApiKey);
+					console.log("[ATM - Get All] : Sample Location: " + atmAccount.getAll()[0].name);
+					console.log("[ATM - Get One] : Location Hour: " + atmAccount.getOne('5528b769a520e026b80e186c').hours[0]);
+				
+				});
+		});	
+		</script>
+	</head>
+	<body>
+		<p>Nessie is Real!</p>
+	</body>
+</html>
