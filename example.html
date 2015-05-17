@@ -12,20 +12,27 @@
 		
 		<script>
 			$(function(){
-				require(['account', 'atm'], function (account, atm) {
+				require(['account', 'atm', 'branch', 'customer', 'deposit', 'transaction', 'withdrawal'], function (account, atm, branch, customer, deposit, transaction, withdrawal) {
 
-					var entApiKey = '<api_key>';
+					var apikey = '<api_key>';
 
 					console.log('Account Demo');
-					var custAccount = account.initWithKey(entApiKey);
+					var custAccount = account.initWithKey(apikey);
 					console.log("[Account - Get All] : Sample Account Nickname: (" + custAccount.getAll()[0].nickname + ")");
-					console.log("[Account - Get All By Type] : " + custAccount.getAllByType('Credit Card')[0].type);
-					console.log("[Account - Get One] : Account Balance $" + parseFloat(custAccount.getOne('5516c07ba520e0066c9ac93a').balance).toFixed(2));
+					console.log("[Account - Get All By Type] : " + custAccount.getAllByType('Checking')[0].type);
+					console.log("[Account - Get One] : Account Balance $" + parseFloat(custAccount.getOne('5516c07ba520e0066c9aca32').balance).toFixed(2));
 				
 					console.log('ATM Demo');
-					var atmAccount = atm.initWithKey(entApiKey);
+					var atmAccount = atm.initWithKey(apikey);
 					console.log("[ATM - Get All] : Sample Location: " + atmAccount.getAll()[0].name);
 					console.log("[ATM - Get One] : Location Hour: " + atmAccount.getOne('5528b769a520e026b80e186c').hours[0]);
+
+					var branchAccount = branch.initWithKey(apikey);
+					console.log("[Branch - Get All] : Sample Branch: " + branchAccount.getAll()[0].name);
+					console.log("[Branch - Get One] : Branch Hour: " + branchAccount.getOne('5516c07aa520e0066c9ac24a').hours[1]);
+
+					var customerAccount = customer.initWithKey(apikey);
+					console.log("[Customer - Get All] : Sample Customer: " + customerAccount.getAll()[0].first_name);
 				
 				});
 		});	
