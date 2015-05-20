@@ -7,9 +7,10 @@
 // -->
 <html>
 	<head>
+		
 		<!-- Required File -->
 		<script data-main="lib/capital_one" src="lib/require-jquery.js"></script>
-		
+
 		<script>
 			$(function(){
 
@@ -17,22 +18,24 @@
 
 					var apikey = '423df4bc066ba5af261701695f7b147d';
 					//accountDemo(apikey, account);
-					//atmDemo(apikey, atm);
+					atmDemo(apikey, atm);
 					//branchDemo(apikey, branch);
-					//customerDemo(apikey, customer);	
-					//depositDemo(apikey, deposit);	
+					//customerDemo(apikey, customer);
+					//depositDemo(apikey, deposit);
 					//transactionDemo(apikey, transaction);
-					withdrawalDemo(apikey, withdrawal);
+					//withdrawalDemo(apikey, withdrawal);
 				});
-		});	
+		});
 
 
 		function withdrawalDemo (apikey, withdrawal) {
 			console.log('withdrawal Demo');
 			var withdrawalAccount = withdrawal.initWithKey(apikey);
 			var accID = '555bed95a520e036e52b24bb';
-			var sampleWithdrawal = '{}';
-			console.log("[withdrawal - withdraw an account] Response: "+ withdrawalAccount.createWithdrawal(accID, ));
+			var sampleWithdrawal = "{\"medium\": \"balance\",\"amount\": 1000,\"description\": \"test\"}";
+			console.log("[withdrawal - withdraw an account] Response: "+ withdrawalAccount.createWithdrawal(accID, sampleWithdrawal));
+			console.log("[withdrawal - get withdrawals by account] Response: "+ withdrawalAccount.getAllByAccountId(accID))
+			console.log("[withdrawal - get withdrawals by id] Response: ")
 		}
 
 		function transactionDemo (apikey, transaction) {
@@ -71,7 +74,7 @@
 			console.log("[Account - Get All By Type] : " + custAccount.getAllByType('Checking')[0].type);
 			console.log("[Account - Get Customer (Prior Update)] : " + custAccount.getAllByCustomerId('555bed95a520e036e52b23b1')[1].nickname);
 			/*
-			Old account: 
+			Old account:
 				{"_id":"555bed95a520e036e52b2821","balance":18450,"bill_ids":[],"customer_id"
 				:"555bed95a520e036e52b23b1","nickname":"Stanislaus's Account","rewards":28259,"type":"Savings"}
 			*/
