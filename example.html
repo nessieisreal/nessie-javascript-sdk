@@ -20,10 +20,36 @@
 					//atmDemo(apikey, atm);
 					//branchDemo(apikey, branch);
 					//customerDemo(apikey, customer);	
-					depositDemo(apikey, deposit);			
+					//depositDemo(apikey, deposit);	
+					//transactionDemo(apikey, transaction);
+					withdrawalDemo(apikey, withdrawal);
 				});
 		});	
 
+
+		function withdrawalDemo (apikey, withdrawal) {
+			console.log('withdrawal Demo');
+			var withdrawalAccount = withdrawal.initWithKey(apikey);
+			var accID = '555bed95a520e036e52b24bb';
+			var sampleWithdrawal = '{}';
+			console.log("[withdrawal - withdraw an account] Response: "+ withdrawalAccount.createWithdrawal(accID, ));
+		}
+
+		function transactionDemo (apikey, transaction) {
+			console.log('transaction Demo');
+			var transactionAccount = transaction.initWithKey(apikey);
+			var accID = '555bed95a520e036e52b24bb';
+			var tranID = '555cb4f7d687276d383b0f9a';
+			var payeeID ='555bed95a520e036e52b24bb';
+			var sampleTransaction = "{\"medium\":\"rewards\",\"payee_id\":\""+payeeID+"\",\"amount\": 250,\"description\": \"test\"}";
+
+			console.log("[Transaction - Get All By AccountId]: " + transactionAccount.getAllByAccountId(accID));
+			console.log("[Transaction - Get All By Payer]: " + transactionAccount.getAllByAccountIdPayer(accID));
+			console.log("[Transaction - Get All By Payee]: " + transactionAccount.getAllByAccountIdPayee(accID));
+			console.log("[Transaction - Get One By Trans ID]: " + transactionAccount.getOneByAccountIdTransactionId(accID, tranID));
+			console.log("[Transaction - Create a Trans] Response: "+ transactionAccount.createTransaction(accID, sampleTransaction));
+			console.log("[Transaction - Delete a Transaction] : " + transactionAccount.deleteTransaction(accID, tranID));
+		}
 
 		function depositDemo (apikey, deposit) {
 			console.log('Deposit Demo');
