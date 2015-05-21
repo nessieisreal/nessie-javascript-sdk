@@ -1,4 +1,3 @@
-					console.log("[ATM - Get All] : Sample ATMLocation: " + atmAccount.getAll()[0].name);
 <!-- //
 /*
  * Author: Vincent K. Sam
@@ -7,35 +6,114 @@
 // -->
 <html>
 	<head>
+		
 		<!-- Required File -->
 		<script data-main="lib/capital_one" src="lib/require-jquery.js"></script>
-		
+
 		<script>
 			$(function(){
+
 				require(['account', 'atm', 'branch', 'customer', 'deposit', 'transaction', 'withdrawal'], function (account, atm, branch, customer, deposit, transaction, withdrawal) {
 
-					var apikey = '<api_key>';
-
-					console.log('Account Demo');
-					var custAccount = account.initWithKey(apikey);
-					console.log("[Account - Get All] : Sample Account Nickname: (" + custAccount.getAll()[0].nickname + ")");
-					console.log("[Account - Get All By Type] : " + custAccount.getAllByType('Checking')[0].type);
-					console.log("[Account - Get One] : Account Balance $" + parseFloat(custAccount.getOne('5516c07ba520e0066c9aca32').balance).toFixed(2));
-				
-					console.log('ATM Demo');
-					var atmAccount = atm.initWithKey(apikey);
-					console.log("[ATM - Get All] : Sample Location: " + atmAccount.getAll()[0].name);
-					console.log("[ATM - Get One] : Location Hour: " + atmAccount.getOne('5528b769a520e026b80e186c').hours[0]);
-
-					var branchAccount = branch.initWithKey(apikey);
-					console.log("[Branch - Get All] : Sample Branch: " + branchAccount.getAll()[0].name);
-					console.log("[Branch - Get One] : Branch Hour: " + branchAccount.getOne('5516c07aa520e0066c9ac24a').hours[1]);
-
-					var customerAccount = customer.initWithKey(apikey);
-					console.log("[Customer - Get All] : Sample Customer: " + customerAccount.getAll()[0].first_name);
-				
+					var apikey = '423df4bc066ba5af261701695f7b147d';
+					//accountDemo(apikey, account);
+					//atmDemo(apikey, atm);
+					//branchDemo(apikey, branch);
+					//customerDemo(apikey, customer);	
+					//depositDemo(apikey, deposit);	
+					transactionDemo(apikey, account, transaction);
+					//withdrawalDemo(apikey, withdrawal);
 				});
-		});	
+		});
+
+
+		function withdrawalDemo (apikey, withdrawal) {
+			console.log('withdrawal Demo');
+			var withdrawalAccount = withdrawal.initWithKey(apikey);
+			var accID = '555bed95a520e036e52b24bb';
+			var sampleWithdrawal = "{\"medium\": \"balance\",\"amount\": 1000,\"description\": \"test\"}";
+			console.log("[withdrawal - withdraw an account] Response: "+ withdrawalAccount.createWithdrawal(accID, sampleWithdrawal));
+			console.log("[withdrawal - get withdrawals by account] Response: "+ withdrawalAccount.getAllByAccountId(accID))
+			console.log("[withdrawal - get withdrawals by id] Response: ")
+		}
+
+		function transactionDemo (apikey, account, transaction) {
+			console.log('transaction Demo');
+			var transactionAccount = transaction.initWithKey(apikey);
+			var accID = '555ca90ed687276d383b0f85';
+			var tranID = '555cb4f7d687276d383b0f9a';
+			var payeeID ='555bed95a520e036e52b24bb';
+			var sampleTransaction = "{\"medium\": \"balance\",\"payee_id\": \""+payeeID+"\",\"amount\": 0,\"description\": \"test\"}";
+
+			console.log("[Transaction - Get All By AccountId]: " + transactionAccount.getAllByAccountId(accID));
+			console.log("[Transaction - Get All By Payer]: " + transactionAccount.getAllByAccountIdPayer(accID));
+			console.log("[Transaction - Get All By Payee]: " + transactionAccount.getAllByAccountIdPayee(accID));
+			console.log("[Transaction - Get One By Trans ID]: " + transactionAccount.getOneByAccountIdTransactionId(accID, tranID));
+			console.log("[Transaction - Create a Trans] Response: "+ transactionAccount.createTransaction(accID, sampleTransaction));
+			
+			var custAccount = account.initWithKey(apikey);
+			var customer = custAccount.getAll()[0];
+			console.log("[Account - Get All] : Sample Account Nickname: (" + customer.nickname + ")");
+			console.log("[Transaction - Delete a Transaction] : " + transactionAccount.deleteTransaction(customer._id, '555cb4f7d687276d383b0f9a'));
+		}
+
+		function depositDemo (apikey, deposit) {
+			console.log('Deposit Demo');
+			var depositAccount = deposit.initWithKey(apikey);
+			var accID = '555bed95a520e036e52b24bb';
+			var depID = '555cb4f7d687276d383b0f9a';
+			var sampleDeposit = "{\"medium\": \"balance\",\"amount\": 100000,\"description\": \"test\"}";
+			console.log("[Deposit - Get All By AccountId]: " + depositAccount.getAllByAccountId(accID));
+			console.log("[Deposit - New deposit]: " + depositAccount.createDeposit(accID, sampleDeposit));
+			console.log("[Deposit - One By AccountId DepositID]: " + depositAccount.getOneByAccountIdDepositId(accID, depID));
+			console.log("[Deposit - Delete Deposit]: " + depositAccount.deleteDeposit(accID, depID));
+		}
+
+
+		function accountDemo (apikey, account) {
+			console.log('Account Demo');
+			var custAccount = account.initWithKey(apikey);
+			console.log("[Account - Get All] : Sample Account Nickname: (" + custAccount.getAll()[0].nickname + ")");
+			console.log("[Account - Get All By Type] : " + custAccount.getAllByType('Checking')[0].type);
+			console.log("[Account - Get Customer (Prior Update)] : " + custAccount.getAllByCustomerId('555bed95a520e036e52b23b1')[1].nickname);
+			/*
+			Old account:
+				{"_id":"555bed95a520e036e52b2821","balance":18450,"bill_ids":[],"customer_id"
+				:"555bed95a520e036e52b23b1","nickname":"Stanislaus's Account","rewards":28259,"type":"Savings"}
+			*/
+			var newAccount = "{\"nickname\":\"Mr. Stanislaus's Account\"}";
+			console.log("[Account - Updating Stanislaus's Account] - response code: " + custAccount.updateAccount('555bed95a520e036e52b2821', newAccount));
+			console.log("[Account - Get Customer (Post Update)] : " + custAccount.getAllByCustomerId('555bed95a520e036e52b23b1')[1].nickname);
+			var sampleAccount = "{\"balance\":50,\"nickname\":\"Lola Account\",\"rewards\":2,\"type\":\"Checking\"}";
+			console.log("[Account - Create Sample for Miss. Stanislaus's Account]:  response" + custAccount.createAccount('555bed95a520e036e52b23b1', sampleAccount));
+			console.log("[Account - Get One] : Account Balance $" + parseFloat(custAccount.getOne('555bed95a520e036e52b27b7').balance).toFixed(2));
+			console.log("[Account - Deleting an Account] : Response code: " + custAccount.deleteAccount('555bed95a520e036e52b27b7'));
+		}
+
+		function atmDemo (apikey, atm) {
+			console.log('ATM Demo');
+			var atmAccount = atm.initWithKey(apikey);
+			console.log("[ATM - Get All] : Sample Location: " + atmAccount.getAll()[0].name);
+			console.log("[ATM - Get One] : Location Hour: " + atmAccount.getOne('555bed94a520e036e52b1d76').hours[0]);
+			console.log("[ATM - Get By Location] : " + atmAccount.getAtmByLocation(38.9283, -77.1753, 5));
+		}
+
+		function branchDemo (apikey, branch) {
+			console.log('Branch Demo');
+			var branchAccount = branch.initWithKey(apikey);
+			console.log("[Branch - Get All] : Sample Branch: " + branchAccount.getAll()[0].name);
+			console.log("[Branch - Get One] : Branch Hour: " + branchAccount.getOne('555bed95a520e036e52b1ff1').hours[1]);
+		}
+
+		function customerDemo (apikey, customer) {
+			var customerAccount = customer.initWithKey(apikey);
+			console.log("[Customer - Get All] : Sample Customer: " + customerAccount.getAll()[0].first_name);
+			console.log("[Customer - Get One] : Sample Customer" + customerAccount.getOne('555bed95a520e036e52b23b2').first_name);
+			console.log("[Customer - Get OneByAccount] : Sample Customer" + customerAccount.getOneByAcountId('555bed95a520e036e52b2597'));
+			var customerInfo = "{\"address\": {\"street_number\": \"8020\",\"street_name\": \"Greenroad Dr\",\"city\": \"McLean\",\"state\": \"VA\",\"zip\": \"22102\"}}";
+			console.log("[Customer - Update Customer] :" + customerAccount.updateCustomer('555bed95a520e036e52b23b1', customerInfo));
+		}
+
 		</script>
 	</head>
 	<body>
