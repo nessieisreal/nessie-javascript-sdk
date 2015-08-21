@@ -16,13 +16,13 @@
 				require(['account', 'atm', 'branch', 'customer', 'deposit', 'transaction', 'withdrawal'], function (account, atm, branch, customer, deposit, transaction, withdrawal) {
 
 					var apikey = '423df4bc066ba5af261701695f7b147d';
-					//accountDemo(apikey, account);
-					//atmDemo(apikey, atm);
-					//branchDemo(apikey, branch);
-					//customerDemo(apikey, customer);	
-					//depositDemo(apikey, deposit);	
+					accountDemo(apikey, account);
+					atmDemo(apikey, atm);
+					branchDemo(apikey, branch);
+					customerDemo(apikey, customer);	
+					depositDemo(apikey, deposit);	
 					transactionDemo(apikey, account, transaction);
-					//withdrawalDemo(apikey, withdrawal);
+					withdrawalDemo(apikey, withdrawal);
 				});
 		});
 
