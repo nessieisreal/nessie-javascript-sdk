@@ -65,7 +65,7 @@
 			var sampleDeposit = "{\"medium\": \"balance\",\"amount\": 100000,\"description\": \"test\"}";
 			console.log("[Deposit - Get All By AccountId]: " + depositAccount.getAllByAccountId(accID));
 			console.log("[Deposit - New deposit]: " + depositAccount.createDeposit(accID, sampleDeposit));
-			console.log("[Deposit - One By AccountId DepositID]: " + depositAccount.getOneByAccountIdDepositId(accID, depID));
+			console.log("[Deposit - Deposit by DepositID]: " + depositAccount.getDepositById(depID));
 			console.log("[Deposit - Delete Deposit]: " + depositAccount.deleteDeposit(accID, depID));
 		}
 
