@@ -107,9 +107,9 @@
 
 		function customerDemo (apikey, customer) {
 			var customerAccount = customer.initWithKey(apikey);
-			console.log("[Customer - Get All] : Sample Customer: " + customerAccount.getAll()[0].first_name);
-			console.log("[Customer - Get One] : Sample Customer" + customerAccount.getOne('555bed95a520e036e52b23b2').first_name);
-			console.log("[Customer - Get OneByAccount] : Sample Customer" + customerAccount.getOneByAcountId('555bed95a520e036e52b2597'));
+			console.log("[Customer - Get All Customers] : Sample Customer: " + customerAccount.getAllCustomers()[0].first_name);
+			console.log("[Customer - Get Customer By Customer ID] : Sample Customer" + customerAccount.getOne('555bed95a520e036e52b23b2').first_name);
+			console.log("[Customer - Get Customer By Account ID] : Sample Customer" + customerAccount.getCustomerByAcountId('555bed95a520e036e52b2597'));
 			var customerInfo = "{\"address\": {\"street_number\": \"8020\",\"street_name\": \"Greenroad Dr\",\"city\": \"McLean\",\"state\": \"VA\",\"zip\": \"22102\"}}";
 			console.log("[Customer - Update Customer] :" + customerAccount.updateCustomer('555bed95a520e036e52b23b1', customerInfo));
 		}
