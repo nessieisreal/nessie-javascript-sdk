@@ -13,7 +13,7 @@
 		<script>
 			$(function(){
 
-				require(['account', 'atm', 'branch', 'customer', 'deposit', 'transaction', 'withdrawal'], function (account, atm, branch, customer, deposit, transaction, withdrawal) {
+				require(['account', 'bills', 'atm', 'branch', 'customer', 'deposit', 'transaction', 'withdrawal', 'merchant', 'purchase'], function (account, 'bills', atm, branch, customer, deposit, transaction, withdrawal, 'merchant', 'purchase') {
 
 					var apikey = '423df4bc066ba5af261701695f7b147d';
 					accountDemo(apikey, account);
@@ -23,9 +23,23 @@
 					depositDemo(apikey, deposit);	
 					transactionDemo(apikey, account, transaction);
 					withdrawalDemo(apikey, withdrawal);
+					billsDemo(apikey, bills);
 				});
 		});
 
+		function billsDemo (apikey, bills) {
+			console.log('bills Demo');
+			var billAccount = bills.initWithKey(apikey);
+			var accID = '555bed95a520e036e52b24bb';
+			var custID = ''; // Retrieve sample Customer ID
+			var billID = ''; // Retrieve sample Bill ID
+			var sampleBill = "{\"status\": \"pending\",\"payee\": \"Verizon\",\"nickname\": \"Cable/Internet\",\"payment_date\": \"2015-09-18\", \"recurring_date\": 1, \"payment_amount\": 0 }";
+			console.log('[bills - get an account\'s bills] Response: ' + billAccount.getAllByAccountId(accID));
+			console.log('[bills - get a customer\'s bills] Response: ' + billAccount.getAllByCustomerId(custID));
+			console.log('[bills - get a specific bill] Response: ' + billAccount.getBill(billID));
+			console.log('[bills - update a bill] Response: ' + billAccount.updateBill(billID, sampleBill));
+			console.log('[bills - delete bill] Response: ' + billAccount.deleteBill(billID));
+		}
 
 		function withdrawalDemo (apikey, withdrawal) {
 			console.log('withdrawal Demo');
@@ -33,8 +47,8 @@
 			var accID = '555bed95a520e036e52b24bb';
 			var sampleWithdrawal = "{\"medium\": \"balance\",\"amount\": 1000,\"description\": \"test\"}";
 			console.log("[withdrawal - withdraw an account] Response: "+ withdrawalAccount.createWithdrawal(accID, sampleWithdrawal));
-			console.log("[withdrawal - get withdrawals by account] Response: "+ withdrawalAccount.getAllByAccountId(accID))
-			console.log("[withdrawal - get withdrawals by id] Response: ")
+			console.log("[withdrawal - get withdrawals by account] Response: "+ withdrawalAccount.getAllByAccountId(accID));
+			console.log("[withdrawal - get withdrawals by id] Response: ");
 		}
 
 		function transactionDemo (apikey, account, transaction) {
@@ -63,17 +77,18 @@
 			var accID = '555bed95a520e036e52b24bb';
 			var depID = '555cb4f7d687276d383b0f9a';
 			var sampleDeposit = "{\"medium\": \"balance\",\"amount\": 100000,\"description\": \"test\"}";
+			var sampleDepositUpdate = "{\"medium\": \"balance\",\"amount\": 205000,\"description\": \"test\"}";
 			console.log("[Deposit - Get All By AccountId]: " + depositAccount.getAllByAccountId(accID));
 			console.log("[Deposit - New deposit]: " + depositAccount.createDeposit(accID, sampleDeposit));
 			console.log("[Deposit - Deposit by DepositID]: " + depositAccount.getDepositById(depID));
-			console.log("[Deposit - Delete Deposit]: " + depositAccount.deleteDeposit(accID, depID));
+			console.log("[Deposit - Update Deposit]: " + depositAccount.updateDeposit(depID, sampleDepositUpdate));
+			console.log("[Deposit - Delete Deposit]: " + depositAccount.deleteDeposit(depID));
 		}
-
 
 		function accountDemo (apikey, account) {
 			console.log('Account Demo');
 			var custAccount = account.initWithKey(apikey);
-			console.log("[Account - Get All] : Sample Account Nickname: (" + custAccount.getAll()[0].nickname + ")");
+			console.log("[Account - Get All Accounts] : Sample Account Nickname: (" + custAccount.getAllAccounts()[0].nickname + ")");
 			console.log("[Account - Get All By Type] : " + custAccount.getAllByType('Checking')[0].type);
 			console.log("[Account - Get Customer (Prior Update)] : " + custAccount.getAllByCustomerId('555bed95a520e036e52b23b1')[1].nickname);
 			/*
@@ -101,14 +116,14 @@
 		function branchDemo (apikey, branch) {
 			console.log('Branch Demo');
 			var branchAccount = branch.initWithKey(apikey);
-			console.log("[Branch - Get All] : Sample Branch: " + branchAccount.getAll()[0].name);
-			console.log("[Branch - Get One] : Branch Hour: " + branchAccount.getOne('555bed95a520e036e52b1ff1').hours[1]);
+			console.log("[Branch - Get All Branches] : Sample Branch: " + branchAccount.getAll()[0].name);
+			console.log("[Branch - Get a Branch] : Branch Hour: " + branchAccount.getBranch('555bed95a520e036e52b1ff1').hours[1]);
 		}
 
 		function customerDemo (apikey, customer) {
 			var customerAccount = customer.initWithKey(apikey);
-			console.log("[Customer - Get All Customers] : Sample Customer: " + customerAccount.getAllCustomers()[0].first_name);
-			console.log("[Customer - Get Customer By Customer ID] : Sample Customer" + customerAccount.getOne('555bed95a520e036e52b23b2').first_name);
+			console.log("[Customer - Get All Customers] : Sample Customer: " + customerAccount.getCustomers()[0].first_name);
+			console.log("[Customer - Get Customer By Customer ID] : Sample Customer" + customerAccount.getCustomerById('555bed95a520e036e52b23b2').first_name);
 			console.log("[Customer - Get Customer By Account ID] : Sample Customer" + customerAccount.getCustomerByAcountId('555bed95a520e036e52b2597'));
 			var customerInfo = "{\"address\": {\"street_number\": \"8020\",\"street_name\": \"Greenroad Dr\",\"city\": \"McLean\",\"state\": \"VA\",\"zip\": \"22102\"}}";
 			console.log("[Customer - Update Customer] :" + customerAccount.updateCustomer('555bed95a520e036e52b23b1', customerInfo));
