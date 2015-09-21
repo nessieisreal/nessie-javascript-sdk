@@ -34,6 +34,7 @@
 			var custID = ''; // Retrieve sample Customer ID
 			var billID = ''; // Retrieve sample Bill ID
 			var sampleBill = "{\"status\": \"pending\",\"payee\": \"Verizon\",\"nickname\": \"Cable/Internet\",\"payment_date\": \"2015-09-18\", \"recurring_date\": 1, \"payment_amount\": 0 }";
+			
 			console.log('[bills - get an account\'s bills] Response: ' + billAccount.getAllByAccountId(accID));
 			console.log('[bills - get a customer\'s bills] Response: ' + billAccount.getAllByCustomerId(custID));
 			console.log('[bills - get a specific bill] Response: ' + billAccount.getBill(billID));
@@ -45,10 +46,16 @@
 			console.log('withdrawal Demo');
 			var withdrawalAccount = withdrawal.initWithKey(apikey);
 			var accID = '555bed95a520e036e52b24bb';
+			var withdrawalID = '';
 			var sampleWithdrawal = "{\"medium\": \"balance\",\"amount\": 1000,\"description\": \"test\"}";
+			var sampleWithdrawUpdate = '{ "medium": "balance", "amount": 0, "description": "string" }';
+			
 			console.log("[withdrawal - withdraw an account] Response: "+ withdrawalAccount.createWithdrawal(accID, sampleWithdrawal));
 			console.log("[withdrawal - get withdrawals by account] Response: "+ withdrawalAccount.getAllByAccountId(accID));
-			console.log("[withdrawal - get withdrawals by id] Response: ");
+			console.log("[withdrawal - get withdrawals by id] Response: " + withdrawalAccount.getWithdrawalById(withdrawalID));
+			console.log("[withdrawal - create withdrawal] Response: " + withdrawalAccount.createWithdrawal(accID, sampleWithdrawal));
+			console.log("[withdrawal - update withdrawal] Response: " + withdrawalAccount.updateWithdrawalById(withdrawalID, sampleWithdrawUpdate));
+			console.log("[withdrawal - delete withdrawal] Response: " + withdrawalAccount.deleteWithdrawals(withdrawalID));
 		}
 
 		function transactionDemo (apikey, account, transaction) {
@@ -78,6 +85,7 @@
 			var depID = '555cb4f7d687276d383b0f9a';
 			var sampleDeposit = "{\"medium\": \"balance\",\"amount\": 100000,\"description\": \"test\"}";
 			var sampleDepositUpdate = "{\"medium\": \"balance\",\"amount\": 205000,\"description\": \"test\"}";
+			
 			console.log("[Deposit - Get All By AccountId]: " + depositAccount.getAllByAccountId(accID));
 			console.log("[Deposit - New deposit]: " + depositAccount.createDeposit(accID, sampleDeposit));
 			console.log("[Deposit - Deposit by DepositID]: " + depositAccount.getDepositById(depID));
@@ -109,7 +117,7 @@
 			console.log('ATM Demo');
 			var atmAccount = atm.initWithKey(apikey);
 			console.log("[ATM - Get All] : Sample Location: " + atmAccount.getAll()[0].name);
-			console.log("[ATM - Get One] : Location Hour: " + atmAccount.getOne('555bed94a520e036e52b1d76').hours[0]);
+			console.log("[ATM - Get One] : Location Hour: " + atmAccount.getATM('555bed94a520e036e52b1d76').hours[0]);
 			console.log("[ATM - Get By Location] : " + atmAccount.getAtmByLocation(38.9283, -77.1753, 5));
 		}
 
