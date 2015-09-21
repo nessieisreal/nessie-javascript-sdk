@@ -13,7 +13,7 @@
 		<script>
 			$(function(){
 
-				require(['account', 'bills', 'atm', 'branch', 'customer', 'deposit', 'transaction', 'withdrawal', 'merchant', 'purchase'], function (account, 'bills', atm, branch, customer, deposit, transaction, withdrawal, 'merchant', 'purchase') {
+				require(['account', 'bills', 'atm', 'branch', 'customer', 'deposit', 'withdrawal', 'merchant', 'purchase'], function (account, 'bills', atm, branch, customer, deposit, withdrawal, 'merchant', 'purchase') {
 
 					var apikey = '423df4bc066ba5af261701695f7b147d';
 					accountDemo(apikey, account);
@@ -21,7 +21,6 @@
 					branchDemo(apikey, branch);
 					customerDemo(apikey, customer);	
 					depositDemo(apikey, deposit);	
-					transactionDemo(apikey, account, transaction);
 					withdrawalDemo(apikey, withdrawal);
 					billsDemo(apikey, bills);
 				});
@@ -56,26 +55,6 @@
 			console.log("[withdrawal - create withdrawal] Response: " + withdrawalAccount.createWithdrawal(accID, sampleWithdrawal));
 			console.log("[withdrawal - update withdrawal] Response: " + withdrawalAccount.updateWithdrawalById(withdrawalID, sampleWithdrawUpdate));
 			console.log("[withdrawal - delete withdrawal] Response: " + withdrawalAccount.deleteWithdrawals(withdrawalID));
-		}
-
-		function transactionDemo (apikey, account, transaction) {
-			console.log('transaction Demo');
-			var transactionAccount = transaction.initWithKey(apikey);
-			var accID = '555ca90ed687276d383b0f85';
-			var tranID = '555cb4f7d687276d383b0f9a';
-			var payeeID ='555bed95a520e036e52b24bb';
-			var sampleTransaction = "{\"medium\": \"balance\",\"payee_id\": \""+payeeID+"\",\"amount\": 0,\"description\": \"test\"}";
-
-			console.log("[Transaction - Get All By AccountId]: " + transactionAccount.getAllByAccountId(accID));
-			console.log("[Transaction - Get All By Payer]: " + transactionAccount.getAllByAccountIdPayer(accID));
-			console.log("[Transaction - Get All By Payee]: " + transactionAccount.getAllByAccountIdPayee(accID));
-			console.log("[Transaction - Get One By Trans ID]: " + transactionAccount.getOneByAccountIdTransactionId(accID, tranID));
-			console.log("[Transaction - Create a Trans] Response: "+ transactionAccount.createTransaction(accID, sampleTransaction));
-			
-			var custAccount = account.initWithKey(apikey);
-			var customer = custAccount.getAll()[0];
-			console.log("[Account - Get All] : Sample Account Nickname: (" + customer.nickname + ")");
-			console.log("[Transaction - Delete a Transaction] : " + transactionAccount.deleteTransaction(customer._id, '555cb4f7d687276d383b0f9a'));
 		}
 
 		function depositDemo (apikey, deposit) {
