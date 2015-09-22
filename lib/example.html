@@ -16,10 +16,10 @@
 				require(['account', 'atm', 'branch', 'customer', 'deposit', 'withdrawal'], function (account, atm, branch, customer, deposit, withdrawal) {
 
 					var apikey = '40eba2d0de86d07544dbdb0abe28db05';
-					// accountDemo(apikey, account); // !!! GOOD !!!
-					// atmDemo(apikey, atm); // !!! GOOD !!!
-					// branchDemo(apikey, branch); // !!! GOOOD !!!
-					// customerDemo(apikey, customer); // !!! GOOD !!!	
+					// accountDemo(apikey, account); // !!! Verified !!!
+					// atmDemo(apikey, atm); // !!! Verified !!!
+					// branchDemo(apikey, branch); // !!! Verified !!!
+					// customerDemo(apikey, customer); // !!! Verified !!!	
 					depositDemo(apikey, deposit); 	
 					// withdrawalDemo(apikey, withdrawal);
 					// billsDemo(apikey, bills);
@@ -101,8 +101,8 @@
 			console.log("[Deposit - Get All By AccountId]: " + depositAccount.getAllByAccountId(accID));
 			console.log("[Deposit - New deposit]: " + depositAccount.createDeposit(accID, sampleDeposit));
 			console.log("[Deposit - Deposit by DepositID]: " + depositAccount.getDepositById(depID));
-			console.log("[Deposit - Update Deposit]: " + depositAccount.updateDeposit(depID, sampleDepositUpdate));
-			console.log("[Deposit - Delete Deposit]: " + depositAccount.deleteDeposit(depID));
+			console.log("[Deposit - Update Deposit]: " + depositAccount.updateDeposit('56015322ce1cef140015e495', sampleDepositUpdate)); //API failed - "NetworkError: 404 Not Found
+			// console.log("[Deposit - Delete Deposit]: " + depositAccount.deleteDeposit(depID));
 		}
 
 		function accountDemo (apikey, account) {
