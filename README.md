@@ -1,6 +1,6 @@
-# Nessie-JavaScript-Wrapper
+# Nessie-JavaScript-SDK
 ##Synopsis
-Capital One Nessie API wrapper written in JavasScript and wrapped in require-jquery. This wrapper can be easily embeddded in web apps.
+Capital One Nessie API SDK written in JavasScript and wrapped in require-jquery. This SDK can be easily embeddded in web apps.
 ##Installation for Web App
 1. Download the lib directory.
 2. Save the library in the web project directory.
@@ -28,4 +28,4 @@ function accountDemo (apikey, account) {
 	console.log("[Account - Get All] : Sample Account Nickname: (" + custAccount.getAll()[0].nickname + ")");
 }
 ```
-You can find examples [here](https://github.com/nessieisreal/Nessie-iOS-Wrapper/blob/master/lib/example.html).
+You can find examples [here](https://github.com/nessieisreal/nessie-javascript-sdk/blob/master/lib/example.html).
