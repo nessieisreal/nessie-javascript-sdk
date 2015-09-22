@@ -109,45 +109,46 @@
 		function accountDemo (apikey, account) {
 			console.log('Account Demo');
 			var custAccount = account.initWithKey(apikey);
+			var custID = '55e94a6af8d8770528e60e64';
+			var accID = '560072e0ce1cef140015e483';
+			var newAccount = "{\"nickname\":\"Mr. Stanislaus's Account\"}";
+			var sampleAccount = "{\"balance\":50,\"nickname\":\"Lola Account\",\"rewards\":2,\"type\":\"Checking\"}";
+
 			console.log("[Account - Get All Accounts] : Sample Account Nickname: (" + custAccount.getAllAccounts()[0].nickname + ")");
 			console.log("[Account - Get All By Type] : " + custAccount.getAllByType('Checking')[0].type);
-			console.log("[Account - Get Customer (Prior Update)] : " + custAccount.getAllByCustomerId('555bed95a520e036e52b23b1')[1].nickname);
-			/*
-			Old account:
-				{"_id":"555bed95a520e036e52b2821","balance":18450,"bill_ids":[],"customer_id"
-				:"555bed95a520e036e52b23b1","nickname":"Stanislaus's Account","rewards":28259,"type":"Savings"}
-			*/
-			var newAccount = "{\"nickname\":\"Mr. Stanislaus's Account\"}";
-			console.log("[Account - Updating Stanislaus's Account] - response code: " + custAccount.updateAccount('555bed95a520e036e52b2821', newAccount));
-			console.log("[Account - Get Customer (Post Update)] : " + custAccount.getAllByCustomerId('555bed95a520e036e52b23b1')[1].nickname);
-			var sampleAccount = "{\"balance\":50,\"nickname\":\"Lola Account\",\"rewards\":2,\"type\":\"Checking\"}";
-			console.log("[Account - Create Sample for Miss. Stanislaus's Account]:  response" + custAccount.createAccount('555bed95a520e036e52b23b1', sampleAccount));
-			console.log("[Account - Get One] : Account Balance $" + parseFloat(custAccount.getOne('555bed95a520e036e52b27b7').balance).toFixed(2));
-			console.log("[Account - Deleting an Account] : Response code: " + custAccount.deleteAccount('555bed95a520e036e52b27b7'));
+			console.log("[Account - Get Customer (Prior Update)] : " + custAccount.getAllByCustomerId(custID)[0].nickname);
+			console.log("[Account - Updating Stanislaus's Account] - response code: " + custAccount.updateAccount(accID, newAccount));
+			console.log("[Account - Get Customer (Post Update)] : " + custAccount.getAllByCustomerId(custID)[0].nickname);
+			console.log("[Account - Create Sample for Miss. Stanislaus's Account]:  response" + custAccount.createAccount(custID, sampleAccount));
+			console.log("[Account - Get One] : Account Balance $" + parseFloat(custAccount.getAccountById(accID).balance).toFixed(2));
+			//console.log("[Account - Deleting an Account] : Response code: " + custAccount.deleteAccount(accID)); // Uncomment with cautious.
 		}
 
 		function atmDemo (apikey, atm) {
 			console.log('ATM Demo');
+			var id = '55e94a6af8d8770528e60a8f';
 			var atmAccount = atm.initWithKey(apikey);
-			console.log("[ATM - Get All] : Sample Location: " + atmAccount.getAll()[0].name);
-			console.log("[ATM - Get One] : Location Hour: " + atmAccount.getATM('555bed94a520e036e52b1d76').hours[0]);
+			console.log("[ATM - Get All] : Sample Location: " + atmAccount.getAll());
+			console.log("[ATM - Get One] : Location Hour: " + atmAccount.getATM(id).hours[0]);
 			console.log("[ATM - Get By Location] : " + atmAccount.getAtmByLocation(38.9283, -77.1753, 5));
 		}
 
 		function branchDemo (apikey, branch) {
 			console.log('Branch Demo');
 			var branchAccount = branch.initWithKey(apikey);
-			console.log("[Branch - Get All Branches] : Sample Branch: " + branchAccount.getAll()[0].name);
-			console.log("[Branch - Get a Branch] : Branch Hour: " + branchAccount.getBranch('555bed95a520e036e52b1ff1').hours[1]);
+			console.log("[Branch - Get All Branches] : Sample Branch: " + branchAccount.getAll()[0].address.zip);
+			console.log("[Branch - Get a Branch] : Branch Hour: " + branchAccount.getBranch('55e94a6af8d8770528e60b53').hours[1]);
 		}
 
 		function customerDemo (apikey, customer) {
 			var customerAccount = customer.initWithKey(apikey);
+			var custID = '55e94a6af8d8770528e60e64';
+			var accID = '560072e0ce1cef140015e483';
 			console.log("[Customer - Get All Customers] : Sample Customer: " + customerAccount.getCustomers()[0].first_name);
-			console.log("[Customer - Get Customer By Customer ID] : Sample Customer" + customerAccount.getCustomerById('555bed95a520e036e52b23b2').first_name);
-			console.log("[Customer - Get Customer By Account ID] : Sample Customer" + customerAccount.getCustomerByAcountId('555bed95a520e036e52b2597'));
+			console.log("[Customer - Get Customer By Customer ID] : Sample Customer: " + customerAccount.getCustomerById(custID).first_name);
+			console.log("[Customer - Get Customer By Account ID] : Sample Customer: " + customerAccount.getCustomerByAcountId(accID));
 			var customerInfo = "{\"address\": {\"street_number\": \"8020\",\"street_name\": \"Greenroad Dr\",\"city\": \"McLean\",\"state\": \"VA\",\"zip\": \"22102\"}}";
-			console.log("[Customer - Update Customer] :" + customerAccount.updateCustomer('555bed95a520e036e52b23b1', customerInfo));
+			console.log("[Customer - Update Customer] :" + customerAccount.updateCustomer(custID, customerInfo));
 		}
 
 		</script>
