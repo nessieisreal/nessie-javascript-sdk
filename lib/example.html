@@ -8,94 +8,93 @@
 	<head>
 		
 		<!-- Required File -->
-		<script data-main="lib/capital_one" src="lib/require-jquery.js"></script>
+		<script data-main="capital_one" src="require-jquery.js"></script>
 
 		<script>
 			$(function(){
 
-				require(['account', 'bills', 'atm', 'branch', 'customer', 'deposit', 'withdrawal', 'merchant', 'purchase'], 
-					function (account, bills, atm, branch, customer, deposit, withdrawal, 'merchant', 'purchase') {
+				require(['account', 'atm', 'branch', 'customer', 'deposit', 'withdrawal'], function (account, atm, branch, customer, deposit, withdrawal) {
 
-					var apikey = '423df4bc066ba5af261701695f7b147d';
-					accountDemo(apikey, account);
-					atmDemo(apikey, atm);
-					branchDemo(apikey, branch);
-					customerDemo(apikey, customer);	
-					depositDemo(apikey, deposit);	
-					withdrawalDemo(apikey, withdrawal);
-					billsDemo(apikey, bills);
-					merchantDemo(apikey, merchant);
-					purchaseDemo(apikey, purchase);
+					var apikey = '40eba2d0de86d07544dbdb0abe28db05';
+					// accountDemo(apikey, account); // !!! GOOD !!!
+					// atmDemo(apikey, atm); // !!! GOOD !!!
+					// branchDemo(apikey, branch); // !!! GOOOD !!!
+					// customerDemo(apikey, customer); // !!! GOOD !!!	
+					depositDemo(apikey, deposit); 	
+					// withdrawalDemo(apikey, withdrawal);
+					// billsDemo(apikey, bills);
+					// merchantDemo(apikey, merchant);
+					// purchaseDemo(apikey, purchase);
 				});
-		});
+			});
 
 
-		function merchantDemo (apikey, merchant) {
-			console.log('merchant Demo');
-			var merchantAccount = merchant.initWithKey(apikey);
-			var merchantID = '';
-			var sampleMerchant = '{ "name": "MVP LLC", "address": { "street_number": "12095", "street_name": "Oakload Park Ave.", "city": "Arlington", "state": "VA", "zip": "22192" }, "geocode": { "lat": 21, "lng": -10 } }';
-			var sampleMerchantUpdate = '{ "name": "MVP Inc.", "address": { "street_number": "12095", "street_name": "Oakload Park Ave.", "city": "Arlington", "state": "VA", "zip": "22192" }, "geocode": { "lat": 21, "lng": -10 } }';
+		// function merchantDemo (apikey, merchant) {
+		// 	console.log('merchant Demo');
+		// 	var merchantAccount = merchant.initWithKey(apikey);
+		// 	var merchantID = '';
+		// 	var sampleMerchant = '{ "name": "MVP LLC", "address": { "street_number": "12095", "street_name": "Oakload Park Ave.", "city": "Arlington", "state": "VA", "zip": "22192" }, "geocode": { "lat": 21, "lng": -10 } }';
+		// 	var sampleMerchantUpdate = '{ "name": "MVP Inc.", "address": { "street_number": "12095", "street_name": "Oakload Park Ave.", "city": "Arlington", "state": "VA", "zip": "22192" }, "geocode": { "lat": 21, "lng": -10 } }';
 
-			console.log("[merchant - get all merchants] Response: " + merchantAccount.getAll());
-			console.log("[merchant - get merchant by ID] Response: " + merchantAccount.getMerchant(merchantID));
-			console.log("[merchant - create merchant] Response: " + merchantAccount.createMerchant(merchantID, sampleMerchant));
-			console.log("[merchant - update merchant] Response: " + merchantAccount.updateMerchant(merchantID, sampleMerchantUpdate));
-		}
+		// 	console.log("[merchant - get all merchants] Response: " + merchantAccount.getAll());
+		// 	console.log("[merchant - get merchant by ID] Response: " + merchantAccount.getMerchant(merchantID));
+		// 	console.log("[merchant - create merchant] Response: " + merchantAccount.createMerchant(merchantID, sampleMerchant));
+		// 	console.log("[merchant - update merchant] Response: " + merchantAccount.updateMerchant(merchantID, sampleMerchantUpdate));
+		// }
 
-		function purchaseDemo (apikey, purchase) {
-			console.log('purchase Demo');
-			var purchaseAccount = purchase.initWithKey(apikey);
-			var accID = '';
-			var purchaseID = '';
-			var samplePurchase = '{ "merchant_id": "748567", "medium": "balance", "purchase_date": "string", "amount": 0, "status": "pending", "description": "string" }';
-			var samplePUrchaseUpdate = '{ "payer_id": "string", "medium": "balance", "amount": 0, "description": "string" }';
+		// function purchaseDemo (apikey, purchase) {
+		// 	console.log('purchase Demo');
+		// 	var purchaseAccount = purchase.initWithKey(apikey);
+		// 	var accID = '';
+		// 	var purchaseID = '';
+		// 	var samplePurchase = '{ "merchant_id": "748567", "medium": "balance", "purchase_date": "string", "amount": 0, "status": "pending", "description": "string" }';
+		// 	var samplePUrchaseUpdate = '{ "payer_id": "string", "medium": "balance", "amount": 0, "description": "string" }';
 
-			console.log("[purchase - get all purchases] Response: " + purchaseAccount.getAll());
-			console.log("[purchase - get purchase] Response: " + purchaseAccount.getPurchase(purchaseID));
-			console.log("[purchase - create purchase] Response: " + purchaseAccount.createPurchase(accID, samplePurchase));
-			console.log("[purchase - update purchase] Response: " + purchaseAccount.updatePurchase(purchaseID, samplePUrchaseUpdate));
-			console.log("[purchase - delete purchase] Response: " + purchaseAccount.deletePurchase(purchaseID));
-		}
+		// 	console.log("[purchase - get all purchases] Response: " + purchaseAccount.getAll());
+		// 	console.log("[purchase - get purchase] Response: " + purchaseAccount.getPurchase(purchaseID));
+		// 	console.log("[purchase - create purchase] Response: " + purchaseAccount.createPurchase(accID, samplePurchase));
+		// 	console.log("[purchase - update purchase] Response: " + purchaseAccount.updatePurchase(purchaseID, samplePUrchaseUpdate));
+		// 	console.log("[purchase - delete purchase] Response: " + purchaseAccount.deletePurchase(purchaseID));
+		// }
 
-		function billsDemo (apikey, bills) {
-			console.log('bills Demo');
-			var billAccount = bills.initWithKey(apikey);
-			var accID = '555bed95a520e036e52b24bb';
-			var custID = ''; // Retrieve sample Customer ID
-			var billID = ''; // Retrieve sample Bill ID
-			var sampleBill = "{\"status\": \"pending\",\"payee\": \"Verizon\",\"nickname\": \"Cable/Internet\",\"payment_date\": \"2015-09-18\", \"recurring_date\": 1, \"payment_amount\": 0 }";
-			var sampleBillUpdate = "{\"status\": \"cancelled\",\"payee\": \"Verizon\",\"nickname\": \"Cable/Internet\",\"payment_date\": \"2015-09-18\", \"recurring_date\": 1, \"payment_amount\": 0 }";
+		// function billsDemo (apikey, bills) {
+		// 	console.log('bills Demo');
+		// 	var billAccount = bills.initWithKey(apikey);
+		// 	var accID = '555bed95a520e036e52b24bb';
+		// 	var custID = ''; // Retrieve sample Customer ID
+		// 	var billID = ''; // Retrieve sample Bill ID
+		// 	var sampleBill = "{\"status\": \"pending\",\"payee\": \"Verizon\",\"nickname\": \"Cable/Internet\",\"payment_date\": \"2015-09-18\", \"recurring_date\": 1, \"payment_amount\": 0 }";
+		// 	var sampleBillUpdate = "{\"status\": \"cancelled\",\"payee\": \"Verizon\",\"nickname\": \"Cable/Internet\",\"payment_date\": \"2015-09-18\", \"recurring_date\": 1, \"payment_amount\": 0 }";
 			
-			console.log('[bills - get an account\'s bills] Response: ' + billAccount.getAllByAccountId(accID));
-			console.log('[bills - get a customer\'s bills] Response: ' + billAccount.getAllByCustomerId(custID));
-			console.log('[bills - get a specific bill] Response: ' + billAccount.getBill(billID));
-			console.log('[bills - create a bill] Response: ' + billAccount.createBill(accID, sampleBill));
-			console.log('[bills - update a bill] Response: ' + billAccount.updateBill(billID, sampleBill));
-			console.log('[bills - delete bill] Response: ' + billAccount.deleteBill(billID));
-		}
+		// 	console.log('[bills - get an account\'s bills] Response: ' + billAccount.getAllByAccountId(accID));
+		// 	console.log('[bills - get a customer\'s bills] Response: ' + billAccount.getAllByCustomerId(custID));
+		// 	console.log('[bills - get a specific bill] Response: ' + billAccount.getBill(billID));
+		// 	console.log('[bills - create a bill] Response: ' + billAccount.createBill(accID, sampleBill));
+		// 	console.log('[bills - update a bill] Response: ' + billAccount.updateBill(billID, sampleBill));
+		// 	console.log('[bills - delete bill] Response: ' + billAccount.deleteBill(billID));
+		// }
 
-		function withdrawalDemo (apikey, withdrawal) {
-			console.log('withdrawal Demo');
-			var withdrawalAccount = withdrawal.initWithKey(apikey);
-			var accID = '555bed95a520e036e52b24bb';
-			var withdrawalID = '';
-			var sampleWithdrawal = "{\"medium\": \"balance\",\"amount\": 1000,\"description\": \"test\"}";
-			var sampleWithdrawUpdate = '{ "medium": "balance", "amount": 0, "description": "string" }';
+		// function withdrawalDemo (apikey, withdrawal) {
+		// 	console.log('withdrawal Demo');
+		// 	var withdrawalAccount = withdrawal.initWithKey(apikey);
+		// 	var accID = '555bed95a520e036e52b24bb';
+		// 	var withdrawalID = '';
+		// 	var sampleWithdrawal = "{\"medium\": \"balance\",\"amount\": 1000,\"description\": \"test\"}";
+		// 	var sampleWithdrawUpdate = '{ "medium": "balance", "amount": 0, "description": "string" }';
 			
-			console.log("[withdrawal - withdraw an account] Response: "+ withdrawalAccount.createWithdrawal(accID, sampleWithdrawal));
-			console.log("[withdrawal - get withdrawals by account] Response: "+ withdrawalAccount.getAllByAccountId(accID));
-			console.log("[withdrawal - get withdrawals by id] Response: " + withdrawalAccount.getWithdrawalById(withdrawalID));
-			console.log("[withdrawal - create withdrawal] Response: " + withdrawalAccount.createWithdrawal(accID, sampleWithdrawal));
-			console.log("[withdrawal - update withdrawal] Response: " + withdrawalAccount.updateWithdrawalById(withdrawalID, sampleWithdrawUpdate));
-			console.log("[withdrawal - delete withdrawal] Response: " + withdrawalAccount.deleteWithdrawals(withdrawalID));
-		}
+		// 	console.log("[withdrawal - withdraw an account] Response: "+ withdrawalAccount.createWithdrawal(accID, sampleWithdrawal));
+		// 	console.log("[withdrawal - get withdrawals by account] Response: "+ withdrawalAccount.getAllByAccountId(accID));
+		// 	console.log("[withdrawal - get withdrawals by id] Response: " + withdrawalAccount.getWithdrawalById(withdrawalID));
+		// 	console.log("[withdrawal - create withdrawal] Response: " + withdrawalAccount.createWithdrawal(accID, sampleWithdrawal));
+		// 	console.log("[withdrawal - update withdrawal] Response: " + withdrawalAccount.updateWithdrawalById(withdrawalID, sampleWithdrawUpdate));
+		// 	console.log("[withdrawal - delete withdrawal] Response: " + withdrawalAccount.deleteWithdrawals(withdrawalID));
+		// }
 
 		function depositDemo (apikey, deposit) {
 			console.log('Deposit Demo');
 			var depositAccount = deposit.initWithKey(apikey);
-			var accID = '555bed95a520e036e52b24bb';
-			var depID = '555cb4f7d687276d383b0f9a';
+			var accID = '560072e0ce1cef140015e483';
+			var depID = '56007773ce1cef140015e487';
 			var sampleDeposit = "{\"medium\": \"balance\",\"amount\": 100000,\"description\": \"test\"}";
 			var sampleDepositUpdate = "{\"medium\": \"balance\",\"amount\": 205000,\"description\": \"test\"}";
 			
