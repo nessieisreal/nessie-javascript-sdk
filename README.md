@@ -19,7 +19,7 @@ $(function(){
 	});
 });
 ```
-The Nessie client methods each returns an object which provides access to data for your desired use.
+Each Nessie client method each returns an object which provides access to data for your desired use.
 ```javascript
 function accountDemo (apikey, account) {
 	console.log('Account Demo');
