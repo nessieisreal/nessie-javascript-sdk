@@ -13,12 +13,11 @@
 </head>
 <body>
   <h1>Nessie is Real!</h1>
-  Note: Please view the source code to see sample code.
 
   <!-- HTML Layout -->
   <!-- see the JavaScript code below for logic & details -->
   <h3>Creating a Customer</h3>
-  <div id="postCustomer"></div>
+  <div id="postCustomer">Uncomment postCustomer() in the source code!</div>
 
   <h3>Retrieving a Customer</h3>
   <div id="getCustomer"></div>
@@ -40,7 +39,7 @@
         var cust = customer.initWithKey(apiKey);
 
         // make the API Calls
-        postCustomer(apiKey, cust);
+        //postCustomer(apiKey, cust);
         getCustomer(apiKey, cust);
       });
     });
@@ -77,7 +76,8 @@
       // display the customer we created
       var fullName = myCustomer.first_name + " " + myCustomer.last_name
       console.log("[Customer - My Customer] " + fullName);
-      $('#getCustomer').html("My Customer: <b>" + fullName + "</b>");
+      $('#getCustomer').html("Results: <b>" + allCustomers.length + "</b>" + " customers retrieved, please see developer console for full list.<br/>");
+      $('#getCustomer').append("My Customer: <b>" + fullName + "</b>");
     }
   </script>
 
